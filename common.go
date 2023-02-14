@@ -101,7 +101,7 @@ type Wiki struct {
 
 func (wiki *Wiki) unmarshalHelper() (err error) {
 	if wiki.RawPublished != "" {
-		wiki.Published, err = time.Parse("Mon, 2 Jan 2006 15:04:05 -0700", wiki.RawPublished)
+		wiki.Published, err = time.Parse("02 Jan 2006, 15:04", wiki.RawPublished)
 	}
 	return
 }
