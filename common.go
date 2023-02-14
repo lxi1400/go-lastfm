@@ -28,9 +28,10 @@ const (
  	ExtraLargeImageSize = "extralarge"
 )
 
+
 type Image struct {
- 	URL  string `xml:",chardata"`
- 	Size string `xml:"size,attr"`
+	Size  string `xml:"size,attr"`
+	URL   string `xml:",chardata"`
 }
 
 type Artist struct {
