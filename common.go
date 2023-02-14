@@ -68,6 +68,7 @@ type AlbumInfo struct {
  
 type Track struct {
 	NowPlaying bool      `xml:"nowplaying,attr"`
+	Images     []*Image  `xml:"image"`
 	Artist     Artist    `xml:"artist"`
 	Album      Album     `xml:"album"`
 	Loved      bool      `xml:"loved"`
