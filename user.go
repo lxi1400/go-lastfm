@@ -70,8 +70,7 @@ func (lfm *LastFM) GetRecentTracks(user string, count int) (tracks *RecentTracks
 		go lfm.cacheSet(method, query, err, hdr)
 		return
 	}
-
-
+	return
 }
 
 type User struct {
