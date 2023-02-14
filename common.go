@@ -52,7 +52,6 @@ type Album struct {
 	URL       string `xml:"url"`
 	Images    []*Image `xml:"image"`
 	Date      string `xml:"date"`
-	UTS       string `xml:"date" attr:"uts"`
 }
 
 // More detailed struct returned in GetTrackInfo.
