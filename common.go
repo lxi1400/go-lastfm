@@ -72,9 +72,7 @@ type Track struct {
 	RawDate lfmDate `xml:"date"`
 }
 
-type User struct {
-	Image string `xml:"image"`
-}
+
 
 func (track *Track) unmarshalHelper() (err error) {
 	if track.RawDate.Date != "" {
