@@ -45,7 +45,7 @@ type Artist struct {
 
 type Album struct {
 	Artist    string `xml:"artist"`
-	MBID      string `xml:"artist" attr:"mbid"`
+	MBID      string `xml:"mbid"`
 	Name      string `xml:"name"`
 	Streamable int    `xml:"streamable"`
 	Album     string `xml:"album"`
