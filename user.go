@@ -73,6 +73,57 @@ func (lfm *LastFM) GetRecentTracks(user string, count int) (tracks *RecentTracks
 	return
 }
 
+type User struct {
+	Name       string      `xml:"user,attr"`
+	ImageURL   string      `xml:"image,attr"`
+	ProfileURL string      `xml:"url,attr"`
+}
+
+// Gets a list of recent tracks from the user. The .Tracks field includes the currently playing track,
+// if any, and up to the count most recent scrobbles.
+// The .NowPlaying field points to any currently playing track.
+//
+// See http://www.last.fm/api/show/user.getRecentTracks.
+func (lfm *LastFM) GetUserInfo(user string) (User *User, err error) {
+	method := "user.getInfo"
+	query := map[string]string{
+		"user":     user,}
+
+	if data, err := lfm.cacheGet(method, query); data != nil {
+		switch v := data.(type) {
+		case User:
+			return &v, err
+		case *User:
+			return v, err
+		}
+	} else if err != nil {
+		return nil, err
+	}
+
+	body, hdr, err := lfm.doQuery(method, query)
+	if err != nil {
+		return
+	}
+	defer body.Close()
+
+	status := lfmStatus{}
+	err = xml.NewDecoder(body).Decode(&status)
+	if err != nil {
+		return
+	}
+	if status.Error.Code != 0 {
+		err = &status.Error
+		go lfm.cacheSet(method, query, err, hdr)
+		return
+	}
+
+	user = &status.User
+	go lfm.cacheSet(method, query, user, hdr)
+	return
+}
+
+
+
 type Tasteometer struct {
 	Users   []string `xml:"input>user>name"`            // The compared users
 	Score   float32  `xml:"result>score"`               // Varies from 0.0 to 1.0
