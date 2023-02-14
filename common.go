@@ -45,6 +45,7 @@ type Artist struct {
 type Album struct {
 	Name string `xml:",chardata"`
 	MBID string `xml:"mbid,attr"`
+	Images  []*Image `xml:"image"`
 }
 
 // More detailed struct returned in GetTrackInfo.
@@ -69,6 +70,10 @@ type Track struct {
 
 	// For internal use
 	RawDate lfmDate `xml:"date"`
+}
+
+type User struct {
+	Image string `xml:"image"`
 }
 
 func (track *Track) unmarshalHelper() (err error) {
