@@ -42,10 +42,17 @@ type Artist struct {
 }
 
 // Less detailed struct returned in GetRecentTracks.
+
 type Album struct {
-	Name string `xml:",chardata"`
-	MBID string `xml:"mbid,attr"`
-	Images  []*Image `xml:"image"`
+	Artist    string `xml:"artist"`
+	MBID      string `xml:"artist" attr:"mbid"`
+	Name      string `xml:"name"`
+	Streamable int    `xml:"streamable"`
+	Album     string `xml:"album"`
+	URL       string `xml:"url"`
+	Images    []*Image `xml:"image"`
+	Date      string `xml:"date"`
+	UTS       string `xml:"date" attr:"uts"`
 }
 
 // More detailed struct returned in GetTrackInfo.
@@ -58,6 +65,7 @@ type AlbumInfo struct {
  	Images  []*Image `xml:"image"`
  }
 
+ 
 type Track struct {
 	NowPlaying bool      `xml:"nowplaying,attr"`
 	Artist     Artist    `xml:"artist"`
