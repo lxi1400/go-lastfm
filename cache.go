@@ -18,6 +18,7 @@ func init() {
 
 	gob.Register(LastFMError{})
 	gob.Register(Neighbours{})
+	gob.Register(User{})
 	gob.Register(RecentTracks{})
 	gob.Register(Tasteometer{})
 	gob.Register(TopArtists{})
