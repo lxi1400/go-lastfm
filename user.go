@@ -74,20 +74,29 @@ func (lfm *LastFM) GetRecentTracks(user string, count int) (tracks *RecentTracks
 }
 
 type User struct {
-	Name       string      `xml:"user,attr"`
-	ImageURL   string      `xml:"image,attr"`
-	ProfileURL string      `xml:"url,attr"`
+	ID          int    `xml:"id"`
+	Name        string `xml:"name"`
+	RealName    string `xml:"realname"`
+	URL         string `xml:"url"`
+	Image       string `xml:"image"`
+	Country     string `xml:"country"`
+	Age         int    `xml:"age"`
+	Gender      string `xml:"gender"`
+	Subscriber  int    `xml:"subscriber"`
+	Playcount   int    `xml:"playcount"`
+	Playlists   int    `xml:"playlists"`
+	Bootstrap   int    `xml:"bootstrap"`
+	Registered  string `xml:"registered"`
+	RegisterUNX string `xml:"registered,attr"`
 }
 
-// Gets a list of recent tracks from the user. The .Tracks field includes the currently playing track,
-// if any, and up to the count most recent scrobbles.
-// The .NowPlaying field points to any currently playing track.
+// Returns user info,
+// 
 //
-// See http://www.last.fm/api/show/user.getRecentTracks.
+// See http://www.last.fm/api/show/user.getInfo.
 func (lfm *LastFM) GetUserInfo(username string) (user *User, err error) {
 	method := "user.getInfo"
-	query := map[string]string{
-		"user":     username,}
+	query := map[string]string{"user": username}
 
 	if data, err := lfm.cacheGet(method, query); data != nil {
 		switch v := data.(type) {
