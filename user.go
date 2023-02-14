@@ -59,18 +59,19 @@ func (lfm *LastFM) GetRecentTracks(user string, count int) (tracks *RecentTracks
 	if err != nil {
 		return
 	}
+	tracks = &status.RecentTracks
+	err = tracks.unmarshalHelper() // Add this line
+	if err == nil {
+		go lfm.cacheSet(method, query, tracks, hdr)
+	}
+	return
 	if status.Error.Code != 0 {
 		err = &status.Error
 		go lfm.cacheSet(method, query, err, hdr)
 		return
 	}
 
-	tracks = &status.RecentTracks
-	err = tracks.unmarshalHelper()
-	if err == nil {
-		go lfm.cacheSet(method, query, tracks, hdr)
-	}
-	return
+
 }
 
 type User struct {
@@ -90,10 +91,10 @@ type User struct {
 	RegisterUNX string `xml:"registered,attr"`
 }
 
-// Returns user info,
+// Returns user info
 // 
 //
-// See http://www.last.fm/api/show/user.getInfo.
+// See http://www.last.fm/api/show/user.getInfo
 func (lfm *LastFM) GetUserInfo(username string) (user *User, err error) {
 	method := "user.getInfo"
 	query := map[string]string{"user": username}
