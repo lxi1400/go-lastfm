@@ -29,7 +29,7 @@ const (
 )
 
 type Image struct {
- 	URL  string `xml:",innerxml"`
+ 	URL  string `xml:",chardata"`
  	Size string `xml:"size,attr"`
 }
 
