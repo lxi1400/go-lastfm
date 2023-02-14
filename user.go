@@ -84,10 +84,10 @@ type User struct {
 // The .NowPlaying field points to any currently playing track.
 //
 // See http://www.last.fm/api/show/user.getRecentTracks.
-func (lfm *LastFM) GetUserInfo(user string) (user *User, err error) {
+func (lfm *LastFM) GetUserInfo(username string) (user *User, err error) {
 	method := "user.getInfo"
 	query := map[string]string{
-		"user":     user,}
+		"user":     username,}
 
 	if data, err := lfm.cacheGet(method, query); data != nil {
 		switch v := data.(type) {
