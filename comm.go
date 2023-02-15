@@ -79,6 +79,7 @@ func (lfm *LastFM) doQuery(method string, params map[string]string) (body io.Rea
 type lfmStatus struct {
 	Status       string       `xml:"status,attr"`
 	User         User         `xml:"user"`
+	Artist       Artist       `xml:"artist`
 	RecentTracks RecentTracks `xml:"recenttracks"`
 	Tasteometer  Tasteometer  `xml:"comparison"`
 	TrackInfo    TrackInfo    `xml:"track"`
@@ -91,4 +92,4 @@ type lfmStatus struct {
 type lfmDate struct {
 	Date string `xml:",chardata"`
 	UTS  int64  `xml:"uts,attr"`
-}
+} 
