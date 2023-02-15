@@ -25,6 +25,9 @@ func (tracks *RecentTracks) unmarshalHelper() (err error) {
 	return
 }
 
+
+
+
 // Gets a list of recent tracks from the user. The .Tracks field includes the currently playing track,
 // if any, and up to the count most recent scrobbles.
 // The .NowPlaying field points to any currently playing track.
@@ -338,6 +341,17 @@ type ArtistInfo struct {
 	} `xml:"stats"`
 }
 
+func (info *ArtistInfo) unmarshalHelper() (err error) {
+	info.Duration, err = time.ParseDuration(info.RawDuration + "ms")
+	if err != nil {
+		return
+	}
+	if info.Wiki != nil {
+		err = info.Wiki.unmarshalHelper()
+	}
+	return
+}
+
 // Gets information for a Artist. The user argument can either be empty ("") or specify a last.fm username, in which
 // case .UserPlaycount will be valid in the returned struct. The autocorrect parameter controls whether
 // last.fm's autocorrection algorithms should be run on the artist name.
@@ -361,7 +375,7 @@ func (lfm *LastFM) GetArtistInfo(artist Artist, user string, autocorrect bool) (
 		query["username"] = user
 	}
 
-	if track.MBID != "" {
+	if artist.MBID != "" {
 		query["mbid"] = artist.MBID
 	} else {
 		query["artist"] = artist.Name
