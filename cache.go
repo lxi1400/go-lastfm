@@ -15,10 +15,10 @@ import (
 
 func init() {
 	gob.Register(cache.Item{})
-
 	gob.Register(LastFMError{})
 	gob.Register(Neighbours{})
 	gob.Register(User{})
+	gob.Register(ArtistInfo{})
 	gob.Register(RecentTracks{})
 	gob.Register(Tasteometer{})
 	gob.Register(TopArtists{})
