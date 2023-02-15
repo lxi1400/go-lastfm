@@ -341,16 +341,6 @@ type ArtistInfo struct {
 	} `xml:"stats"`
 }
 
-func (info *ArtistInfo) unmarshalHelper() (err error) {
-	info.Duration, err = time.ParseDuration(info.RawDuration + "ms")
-	if err != nil {
-		return
-	}
-	if info.Wiki != nil {
-		err = info.Wiki.unmarshalHelper()
-	}
-	return
-}
 
 // Gets information for a Artist. The user argument can either be empty ("") or specify a last.fm username, in which
 // case .UserPlaycount will be valid in the returned struct. The autocorrect parameter controls whether
@@ -410,9 +400,6 @@ func (lfm *LastFM) GetArtistInfo(artist Artist, user string, autocorrect bool) (
 	}
 
 	info = &status.ArtistInfo
-	err = info.unmarshalHelper()
-	if err == nil {
-		go lfm.cacheSet(method, query, info, hdr)
-	}
+	go lfm.cacheSet(method, query, info, hdr)
 	return
 }
