@@ -399,7 +399,7 @@ func (lfm *LastFM) GetArtistInfo(artist Artist, user string, autocorrect bool) (
 		return
 	}
 
-	info = &status.ArtistInfo
+	info = status.ArtistInfo
 	go lfm.cacheSet(method, query, info, hdr)
 	return
 }
