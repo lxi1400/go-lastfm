@@ -373,9 +373,9 @@ func (lfm *LastFM) GetArtistInfo(artist Artist, user string, autocorrect bool) (
 
 	if data, err := lfm.cacheGet(method, query); data != nil {
 		switch v := data.(type) {
-		case ArtistInfo:
+		case info:
 			return &v, err
-		case *ArtistInfo:
+		case *info:
 			return v, err
 		}
 	} else if err != nil {
@@ -399,7 +399,7 @@ func (lfm *LastFM) GetArtistInfo(artist Artist, user string, autocorrect bool) (
 		return
 	}
 
-	info = status.ArtistInfo
+	info = &status.ArtistInfo
 	go lfm.cacheSet(method, query, info, hdr)
 	return
 }
