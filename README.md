@@ -15,18 +15,21 @@ package main
 
 import (
 	"fmt"
-	"github.com/lxi1400/lastfm"
+	"github.com/lxi1400/go-lastfm"
 )
 
 func main() {
+	// Get Tracks
 	tracks, err := lfm.GetRecentTracks("username", 1) 
 	if err != nil {
 		fmt.Println(err.Error())
 	}
 
+	// Get current track
 	trackSlice := tracks.Tracks
 	currentTrack := trackSlice[0]
 
+	// Print the current tracks name and if it is currently playing
 	fmt.Println(currentTrack["nam"])
 	fmt.Println(tracks.NowPlaying)
 }
